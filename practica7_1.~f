@@ -1,0 +1,118 @@
+        PROGRAM practica7_1
+        INTEGER,ALLOCATABLE,DIMENSION(:) :: vector1,vector2
+        REAL,DIMENSION(2,2) :: autvec
+        REAL,DIMENSION(2,2) :: matrix
+        INTEGER :: dim1,dim2
+        
+        PRINT*,"Dimension primer vector"
+        READ*,dim1
+        ALLOCATE(vector1(dim1))
+        PRINT*,"Primer vector"
+        READ*,vector1
+        
+        PRINT*,"Dimension segundo vector"
+        READ*,dim2
+        ALLOCATE(vector2(dim2))
+        PRINT*,"Segundo vector"
+        READ*,vector2
+
+        matrix=minmax(vector1,vector2,dim1,dim2)
+        
+        WRITE(*,"(F10.5,F10.5)") matrix
+        
+        autvec=autovector(matrix)
+        
+        WRITE(*,"(F10.5,F10.5)") autvec
+        
+        READ*,
+        
+        CONTAINS
+        
+        FUNCTION autovector(m) RESULT(autvec)
+        REAL,DIMENSION(2,2) :: m,autvec
+        REAL,DIMENSION(2) :: autval,vector,vec
+        REAL :: x1,x2,a,b,c
+        autval=0
+        a=1
+        b=m(1,1)+m(2,2)
+        c=(m(1,1)*m(2,2))-(m(1,2)*m(2,1))
+
+        x1=-(((-b)+(b**2-4*c)**0.5))*0.5
+        x2=-(((-b)-(b**2-4*c)**0.5))/2.0
+        
+        IF(x1/=x2) THEN
+        autval=(/x1,x2/)
+        ELSE IF (x1==x2) THEN
+        autval(1)=x1
+        END IF
+
+        
+        DO i=1,2
+           m(1,1)=m(1,1)-autval(i)
+           m(2,2)=m(2,2)-autval(i)
+           PRINT*,"matriz"
+           WRITE(*,"(F10.5,F10.5)") m
+           IF(m(1,1)==0) THEN
+           vec=(/m(2,1),-m(2,2)/)
+           ELSE IF(m(2,2)==0) THEN
+           vec=(/m(1,1),-m(1,2)/)
+           ELSE
+           vec=(/m(1,1),-m(1,2)/)
+           END IF
+           autvec(i,1:2)=vec
+           m(1,1)=m(1,1)+autval(i)
+           m(2,2)=m(2,2)+autval(i)
+           PRINT*,"autovector"
+           WRITE(*,"(F10.5,F10.5)") autvec(i,1:2)
+           PRINT*,"matriz"
+           WRITE(*,"(F10.5,F10.5)") m
+        END DO
+
+        
+        END FUNCTION
+        
+        FUNCTION minmax(vector1,vector2,dim1,dim2) RESULT(matrix)
+        INTEGER,DIMENSION(:) :: vector1,vector2
+        REAL,DIMENSION(2,2) :: matrix
+        INTEGER,DIMENSION(2) :: valor1,valor2
+        INTEGER,DIMENSION(4) :: valor
+        INTEGER :: dim1,dim2,u
+
+        valor1=calcular(vector1,dim1)
+        valor2=calcular(vector2,dim2)
+        valor=(/valor1,valor2/)
+        u=1
+        DO j=1,2
+           DO k=1,2
+           matrix(j,k)=valor(u)
+           u=u+1
+           END DO
+        END DO
+        
+        END FUNCTION
+        
+        FUNCTION calcular(vector,dim) RESULT(valor)
+        INTEGER,DIMENSION(:) :: vector
+        INTEGER,DIMENSION(2) :: valor
+        INTEGER :: dim ,minimo,maximo
+
+        minimo=vector(1)
+        DO j=1,dim
+        IF (minimo>=vector(j)) THEN
+        minimo=vector(j)
+        END IF
+        END DO
+        
+        maximo=vector(1)
+        DO j=1,dim
+        IF (maximo<=vector(j)) THEN
+        maximo=vector(j)
+        END IF
+        END DO
+        
+        valor=(/minimo,maximo/)
+        
+        END FUNCTION
+        
+        
+        END PROGRAM practica7_1

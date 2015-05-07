@@ -1,0 +1,80 @@
+        PROGRAM repaso1
+        INTEGER :: opcion,number,a,b
+        INTEGER,DIMENSION(2) :: vectornum
+        
+        DO WHILE (opcion/=4)
+        
+        WRITE(*,*) "Selecciona la opcion"
+        WRITE(*,*) "1) Como un dato INTEGER"
+        WRITE(*,*) "2) Como un vector de dos INTEGER: numero y d¡gitos"
+        WRITE(*,*) "3) Como cadena de caracteres"
+        WRITE(*,*) "4) SALIR"
+        READ*,opcion
+
+        SELECT CASE (opcion)
+               CASE(1)
+                      PRINT*,""
+                      WRITE(*,*) "Introduzca su numero"
+                      READ*,number
+                      number=Programa1(number)
+               CASE(2)
+                      PRINT *,""
+                      WRITE(*,"(2A10)") "Numero","D¡gitos"
+                      READ(*,*) vectornum(1),vectornum(2)
+               CASE(3)
+               CASE(4)
+               CASE DEFAULT
+               WRITE(*,"(A,I2,A)") "El numero",opcion," no es v lido"
+        END SELECT
+        END DO
+        
+        PRINT*,"FIN"
+        READ*,
+        
+        CONTAINS
+        
+        !PROGRAMA NUMERO 1
+        FUNCTION Programa1(numero)
+        INTEGER :: numero,numbis,long,j,i
+        INTEGER,ALLOCATABLE,DIMENSION(:) :: vector
+        !Con esto calculo la longitud del numero viendo el numero de
+        !cifras que tiene multiplicando su divisor por 10 en cada
+        !incremento, ya que si tiene 10 es que tiene una cifra mas
+        i=1
+        long=1
+        DO WHILE ((numero/i)>=10)
+        long=long+1
+        i=i*10
+        END DO
+        
+        !Creo un vector de longitud la del numero
+        
+        ALLOCATE(vector(long))
+
+        !En cada comp del vector meto el numero dividido por el cociente
+        !que obtengo de la i, como cada vez se lo he ido quitando me
+        !sale el numero separado perfectamente.
+        
+        numbis=numero
+        DO j=1,long
+        vector(j)=numbis/i
+        numbis=numbis-vector(j)*i
+        i=i/10
+        END DO
+
+        !Voy a calcular el valor de las componentes del vector elevadas
+        !a la longitud del numero
+        numbis=0
+        DO j=1,long
+        numbis=numbis+(vector(j)**long)
+        END DO
+
+        IF (numbis==numero) THEN
+        WRITE(*,*) "El numero ES narcisista"
+        ELSE
+        WRITE(*,*) "El numero NO ES narcisista"
+        END IF
+        
+        END FUNCTION
+        
+        END PROGRAM repaso1

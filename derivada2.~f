@@ -1,0 +1,25 @@
+        PROGRAM integral2
+        
+        REAL (KIND=8) :: x,estamos,siguiente,arect,atri,at
+        INTEGER :: intervalo
+        
+        PRINT*,"Introducir numero de intervalos"
+        READ*,intervalo
+        
+        x=9.0/intervalo
+        estamos=0
+        at=0
+
+        DO i=1,intervalo,1
+        arect=x*(estamos**2)
+        atri=x*((siguiente**2)-(estamos**2))*0.5
+        at=at+arect+atri
+        estamos=estamos+x
+        END DO
+        PRINT*,"La funci¢n x^2 tiene como area aproximada:",at
+        
+        
+          read*,
+        
+        END PROGRAM integral2
+

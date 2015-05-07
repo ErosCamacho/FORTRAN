@@ -1,0 +1,106 @@
+	PROGRAM practica312_1
+	INTEGER :: opcion
+	INTEGER,DIMENSION(10) :: vector
+	vector=0
+	vector=(/1,2,3,4,5,6,7,8,9,10/)
+	DO WHILE(opcion/=6)
+	opcion=0
+	PRINT*,""
+	PRINT*,"1. Añadir elemento"
+	PRINT*,"2. Eliminar elemento"
+	PRINT*,"3. Mostrar vector"
+	PRINT*,"4. Numero de multiplos del 3"
+	PRINT*,"5. Mínimo elemento"
+	PRINT*,"6. Terminar"
+
+	READ*,opcion
+	SELECT CASE (opcion)
+	CASE(1)
+	vector=anadir(vector)
+	CASE(2)
+	vector=eliminar(vector)
+	CASE(3)
+	PRINT*,vector
+	CASE(4)
+
+	CASE(5)
+	END SELECT
+	END DO
+
+	CONTAINS
+
+	!FUNCION ANADIR
+
+	FUNCTION anadir(v) RESULT(w)
+	INTEGER,DIMENSION(10) :: v,w
+	INTEGER :: k,cond1
+
+	cond1=lleno(v)
+	IF (cond1 == 1) THEN
+	PRINT*,"El vector está lleno"
+	ELSE
+	k=1
+	DO WHILE (v(k)/=0)
+	k=k+1
+	END DO
+	READ*,v(k)
+	END IF
+	w=v
+	PRINT*,w
+	END FUNCTION
+
+	!FUNCION ELIMINAR
+
+	FUNCTION eliminar(v) RESULT(w)
+	INTEGER,DIMENSION(10) :: v,w
+	INTEGER :: n,i,cond2
+	cond2=lleno(v)
+	w=0
+	IF(cond2 /= 0) THEN
+	PRINT*,"Inserte el elemento a eliminar"
+	READ*,n
+	i=1
+	IF(i<=n) THEN
+	DO i=1,n-1
+	w(i)=v(i)
+	END DO
+	DO i=n+1,10
+	w(i-1)=v(i)
+	END DO
+	END IF
+	ELSE
+	PRINT*,"El vector está vacio"
+
+	END IF
+	v=w
+	PRINT*,w
+	END FUNCTION
+
+	!FUNCION MULTIPLOS
+
+	FUNCTION multiplos(v) RESULT(num)
+	INTEGER :: v(:)
+	INTEGER :: c,num
+	num=0
+	DO c=1,10
+	IF(MOD(v(c),3)==0) THEN
+	num=num+1
+	END IF
+	END DO
+	END FUNCTION
+
+	!FUNCION LLENO
+
+	FUNCTION lleno(x) RESULT(llen)
+	INTEGER :: x(:)
+	INTEGER :: llen
+	llen=3
+	IF (x(10)/=0) THEN
+	llen=1
+	ELSE IF (x(1)==0) THEN
+	llen=0
+	END IF
+
+	END FUNCTION
+
+	END PROGRAM practica312_1

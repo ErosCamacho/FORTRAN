@@ -1,0 +1,46 @@
+        PROGRAM practica53
+        INTEGER,DIMENSION(1000,1000)::m1,m2,resultado1
+        INTEGER :: f1,c1,f2,c2
+        m1=0
+        m2=0
+        
+        PRINT*,"Introduce la primera matriz"
+        PRINT*,"Numero de filas"
+        READ*,f1
+        PRINT*,"Numero de columnas"
+        READ*,c1
+        PRINT*,"Introducir matriz"
+        READ*,m1(1:f1,1:c1)
+        
+        PRINT*,"Introduce la segunda matriz"
+        PRINT*,"Numero de filas"
+        READ*,f2
+        PRINT*,"Numero de columnas"
+        READ*,c2
+        PRINT*,"Introducir matriz"
+        READ*,m2(1:f2,1:c2)
+        
+        resultado1(1:f1,1:c1)=suma(m1(1:f1,1:c1),m2(1:f2,1:c2),f1,c1)
+        
+        PRINT*,resultado1(1:f1,1:c1)
+        
+        PRINT*,"FIN"
+        READ*,
+        
+        
+        CONTAINS
+        FUNCTION suma(matriz1,matriz2,f,c) RESULT(mres1)
+        INTEGER :: matriz1(:,:)
+        INTEGER :: matriz2(:,:)
+        INTEGER :: f,c,i,j
+        INTEGER,DIMENSION(1000,1000) :: mres1
+        mres1=0
+        
+        DO i=1,f
+           DO j=1,c
+           mres1(i,j)=matriz1(i,j)+matriz2(i,j)
+           END DO
+        END DO
+        END FUNCTION
+
+        END PROGRAM practica53

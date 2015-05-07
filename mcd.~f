@@ -1,0 +1,77 @@
+        PROGRAM mcd
+
+	INTEGER :: numero1,numero2,div1(10),div2(10),h,div
+
+	PRINT*,"Introduzca un numero"
+	READ*,numero1
+	PRINT*,"Introduzca un numero"
+	READ*,numero2
+
+	div1=divisores(numero1)
+        PRINT*,"div1",div1
+	div2=divisores(numero2)
+	PRINT*,"div2",div2
+        div=1
+        DO h=1,10,1
+        u=div1(h)
+        v=div2(h)
+                 IF (div1(h) == div2(h)) THEN
+                    print*,"el mcm es",div1(h)
+        
+                  END IF
+        !IF(div1(h) .EQ. div2(h)) EXIT
+        END DO
+
+        PRINT*, div
+
+        READ*,
+	CONTAINS
+  	FUNCTION primo(x) RESULT (y)
+
+	INTEGER :: x,i
+	LOGICAL :: y
+
+
+		DO i=2,x/2,1
+		!print*,"i",i
+			y=.TRUE.
+			IF(MOD(x,i)==0) THEN
+			y=.FALSE.
+			END IF
+			IF(MOD(x,i)==0) EXIT
+                          !print*,"y",y
+		END DO
+
+	END FUNCTION
+
+	FUNCTION divisores(a) RESULT (b)
+
+
+	INTEGER :: a,b(10),k
+	LOGICAL :: m
+
+
+           j=1
+		DO k=2,a,1
+		
+		m=.FALSE.
+		!print*,"k2",k
+                !print*,"m2",m
+		IF(MOD(a,k)==0) THEN
+		m=primo(k)
+		!print*,"m",m
+		END IF
+
+		IF(m .eqv. .TRUE.) THEN
+		b(j)=k
+                j=j+1
+		END IF
+
+		END DO
+        
+
+	END FUNCTION
+	
+
+
+	END PROGRAM mcd
